@@ -1,11 +1,6 @@
 package main
 
-import (
-	"crypto/sha1"
-	"fmt"
-
-	"github.com/cpuguy83/dockerclient"
-)
+import "github.com/cpuguy83/dockerclient"
 
 type Volume struct {
 	docker.Volume
@@ -19,12 +14,6 @@ type volStore struct {
 }
 
 func (v *volStore) Add(volume *Volume) {
-	volume.ID = volume.Id()
-	if volume.IsBindMount {
-		h := sha1.New()
-		h.Write([]byte(volume.HostPath))
-		volume.ID = fmt.Sprintf("%x", h.Sum(nil))
-	}
 	v.s[volume.ID] = volume
 }
 
